@@ -4,7 +4,7 @@ This module manages php and the installed modules.
 ##Dependencies
 
 - puppetlabs/stdlib *4.3.2*
-- puppetlabs/apt *v1.6.0*
+- puppetlabs/apt *1.6.0*
 
 ## Puppetfile
 
