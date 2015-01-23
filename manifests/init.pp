@@ -18,9 +18,9 @@
 #   include aw_php
 #
 #   class { 'aw_php':
-#     'development'   => true
-#     'custom_config' => 'aw_php/override.ini.erb'
-#     'remove_apache' => true
+#     development   => true
+#     custom_config => 'aw_php/override.ini.erb'
+#     remove_apache => true
 #   }
 #
 # === Authors
