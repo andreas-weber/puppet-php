@@ -37,22 +37,6 @@ class aw_php(
   $remove_apache = true
 )
 {
-  class { 'apt':
-    always_apt_update => true
-  }
-
-  apt::key { 'dotdeb-key':
-    key        => '89DF5277',
-    key_source => 'http://www.dotdeb.org/dotdeb.gpg',
-  }
-
-  apt::source { 'dotdeb-php':
-    location          => 'http://packages.dotdeb.org',
-    repos             => 'all',
-    include_src       => true,
-    require           => Apt::Key['dotdeb-key']
-  }
-
   package {
     [
       'php5-cli',
@@ -62,7 +46,7 @@ class aw_php(
       'php5-curl'
     ]:
       ensure  => 'latest',
-      require => Apt::Source['dotdeb-php']
+      require => Class['aw_apt_dotdeb']
   }
 
   file { '/etc/php5/conf.d/95-custom.ini':
@@ -75,7 +59,7 @@ class aw_php(
   if($development) {
     package { 'php5-xdebug':
       ensure  => 'latest',
-      require => Apt::Source['dotdeb-php']
+      require => Class['aw_apt_dotdeb']
     }
 
     file { '/etc/php5/conf.d/99-development.ini':
