@@ -44,6 +44,7 @@ class aw_php(
       'php5-intl',
       'php5-mysql',
       'php5-curl',
+      'php5-ssh2',
       'php5-gearman'
     ]:
       ensure  => 'latest',
