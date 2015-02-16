@@ -43,7 +43,8 @@ class aw_php(
       'php5-mcrypt',
       'php5-intl',
       'php5-mysql',
-      'php5-curl'
+      'php5-curl',
+      'php5-gearman'
     ]:
       ensure  => 'latest',
       require => Class['aw_apt_dotdeb']
