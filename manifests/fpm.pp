@@ -36,14 +36,6 @@ class aw_php::fpm()
     notify  => Service['php5-fpm']
   }
 
-  file { '/etc/php5/fpm/pool.d/www.conf':
-    ensure  => file,
-    backup  => false,
-    content => template('aw_php/fpm/www.conf.erb'),
-    require => Package['php5-fpm'],
-    notify  => Service['php5-fpm']
-  }
-
   service { 'php5-fpm':
     ensure     => 'running',
     enable     => true,

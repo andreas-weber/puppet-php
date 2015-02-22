@@ -34,7 +34,8 @@
 class aw_php(
   $development = false,
   $custom_config = 'aw_php/custom.ini.erb',
-  $remove_apache = true
+  $remove_apache = true,
+  $fpm = false
 )
 {
   package {
@@ -58,43 +59,6 @@ class aw_php(
     require => Package['php5-cli']
   }
 
-  if($development) {
-    package { 'php5-xdebug':
-      ensure  => 'latest',
-      require => Class['aw_apt_dotdeb']
-    }
-
-    file { '/etc/php5/conf.d/99-development.ini':
-      ensure  => file,
-      backup  => false,
-      content => template('aw_php/development.ini.erb'),
-      require => Package['php5-cli']
-    }
-
-    file { '/etc/php5/conf.d/99-xdebug.ini':
-      ensure  => file,
-      backup  => false,
-      content => template('aw_php/xdebug.ini.erb'),
-      require => Package['php5-xdebug']
-    }
-
-    file { '/usr/bin/php-debug':
-      ensure  => file,
-      backup  => false,
-      content => template('aw_php/php-debug.erb'),
-      mode    => 0777,
-      require => Package['php5-xdebug']
-    }
-
-    file { '/etc/profile.d/php-debug-alias.sh':
-      ensure  => file,
-      backup  => false,
-      content => template('aw_php/php-debug-alias.sh.erb'),
-      mode    => 0644,
-      require => Package['php5-xdebug']
-    }
-  }
-
   if($remove_apache) {
     package {
       [
@@ -103,5 +67,13 @@ class aw_php(
         ensure  => 'purged',
         require => Package['php5-cli']
     }
+  }
+
+  if($development) {
+    include aw_php::development
+  }
+
+  if($fpm) {
+    include aw_php::fpm
   }
 }
