@@ -28,6 +28,13 @@ class aw_php::fpm()
       require => Class['aw_apt_dotdeb']
   }
 
+  file { '/etc/php5/fpm/conf.d/99-fpm.ini':
+    ensure  => file,
+    backup  => false,
+    content => template('aw_php/fpm.ini.erb'),
+    require => Package['php5-fpm']
+  }
+
   service { 'php5-fpm':
     ensure     => 'running',
     enable     => true,
