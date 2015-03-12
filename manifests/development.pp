@@ -8,7 +8,9 @@
 #
 #   include aw_php::development
 #
-#   class { 'aw_php::development': }
+#   class { 'aw_php::development':
+#     installed => true
+#   }
 #
 # === Authors
 #
@@ -18,29 +20,39 @@
 #
 # Copyright 2015 Andreas Weber
 #
-class aw_php::development()
+class aw_php::development(
+  $installed = true
+)
 {
+  if($installed) {
+    $package = 'latest'
+    $file = 'file'
+  } else {
+    $package = 'purged'
+    $file = 'purged'
+  }
+
   package { 'php5-xdebug':
-    ensure  => 'latest',
+    ensure  => $package,
     require => Class['aw_apt_dotdeb']
   }
 
   file { '/etc/php5/conf.d/99-development.ini':
-    ensure  => file,
+    ensure  => $file,
     backup  => false,
     content => template('aw_php/development.ini.erb'),
     require => Package['php5-cli']
   }
 
   file { '/etc/php5/conf.d/99-xdebug.ini':
-    ensure  => file,
+    ensure  => $file,
     backup  => false,
     content => template('aw_php/xdebug.ini.erb'),
     require => Package['php5-xdebug']
   }
 
   file { '/usr/bin/php-debug':
-    ensure  => file,
+    ensure  => $file,
     backup  => false,
     content => template('aw_php/php-debug.erb'),
     mode    => 0777,
@@ -48,7 +60,7 @@ class aw_php::development()
   }
 
   file { '/etc/profile.d/php-debug-alias.sh':
-    ensure  => file,
+    ensure  => $file,
     backup  => false,
     content => template('aw_php/php-debug-alias.sh.erb'),
     mode    => 0644,
