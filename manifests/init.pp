@@ -69,8 +69,8 @@ class aw_php(
     }
   }
 
-  class { 'aw_php::development':
-    installed => $development
+  if($development) {
+    include aw_php::development
   }
 
   if($fpm) {
