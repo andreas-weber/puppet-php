@@ -1,9 +1,9 @@
-#Puppet Module - PHP
+# Puppet Module - PHP
 This module manages php and the installed modules.
 
-##Dependencies
+## Dependencies
 
-- https://github.com/andreas-weber/puppet-apt-dotdeb
+- https://github.com/andreas-weber/puppet-apt-dotdeb `0.2.0`
 
 ## Puppetfile
 
