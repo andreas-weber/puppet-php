@@ -25,7 +25,7 @@ class aw_php::fpm()
       'php5-fpm'
     ]:
       ensure  => 'latest',
-      require => Class['aw_apt_dotdeb']
+      require => Apt::Source['dotdeb-php']
   }
 
   file { '/etc/php5/fpm/conf.d/99-fpm.ini':

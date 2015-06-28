@@ -49,7 +49,7 @@ class aw_php(
       'php5-gearman'
     ]:
       ensure  => 'latest',
-      require => Class['aw_apt_dotdeb']
+      require => Apt::Source['dotdeb-php']
   }
 
   file { '/etc/php5/conf.d/95-custom.ini':
